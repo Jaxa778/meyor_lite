@@ -28,4 +28,5 @@ class MainApp extends StatelessWidget {
       },
     );
   }
+  //Ustoz hali tekshirmay turing juda chalada, Noldan behato tiklayotgan edim.
 }
