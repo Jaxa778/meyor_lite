@@ -137,17 +137,68 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
               child: Consumer<AppController>(
-                
                 builder: (context, value, child) {
                   return ListView.builder(
                     itemBuilder: (context, index) {
                       final cost = value.wallets[index];
-                      return ListTile(
-                        leading: CircleAvatar(backgroundColor: Colors.amber),
-                        title: Text(cost.costName),
-                        subtitle: Text(cost.costDate.toString()),
-                        trailing: Text(
-                          "${cost.costPrice.toStringAsFixed(1)} som",
+                      return Dismissible(
+                        key: Key(cost.id.toString()),
+                        direction: DismissDirection.endToStart,
+                        confirmDismiss: (direction) async {
+                          return await showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: const Text("O'chirish"),
+                                content: Text(
+                                  "${cost.costName} ni o'chirishni xohlaysizmi?",
+                                ),
+                                actions: [
+                                  TextButton(
+                                    onPressed:
+                                        () => Navigator.of(context).pop(false),
+                                    child: const Text("Yo'q"),
+                                  ),
+                                  FilledButton(
+                                    onPressed:
+                                        () => Navigator.of(context).pop(true),
+                                    child: const Text("Ha"),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        },
+                        onDismissed: (direction) {
+                          value.deleteWallet(cost.id);
+
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text("${cost.costName} o'chirildi"),
+                              backgroundColor: Colors.red,
+                              behavior: SnackBarBehavior.floating,
+                              action: SnackBarAction(
+                                label: 'Bekor qilish',
+                                textColor: Colors.white,
+                                onPressed: () {},
+                              ),
+                            ),
+                          );
+                        },
+                        child: ListTile(
+                          onTap:
+                              () => showDialog(
+                                context: context,
+                                builder:
+                                    (context) =>
+                                        AlertDialogWidget(oldCost: cost),
+                              ),
+                          leading: CircleAvatar(backgroundColor: Colors.amber),
+                          title: Text(cost.costName),
+                          subtitle: Text(cost.costDate.toString()),
+                          trailing: Text(
+                            "${cost.costPrice.toStringAsFixed(1)} som",
+                          ),
                         ),
                       );
                     },
