@@ -123,7 +123,6 @@ class _HomeScreenState extends State<HomeScreen> {
               width: double.infinity,
               decoration: BoxDecoration(
                 color: Colors.red,
-
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(40),
                   topRight: Radius.circular(40),
@@ -197,7 +196,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           title: Text(cost.costName),
                           subtitle: Text(cost.costDate.toString()),
                           trailing: Text(
-                            "${cost.costPrice.toStringAsFixed(1)} som",
+                            "${cost.costPrice.toStringAsFixed(1)} so'm",
                           ),
                         ),
                       );
@@ -241,21 +240,4 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-  // Future<void> _manageWallet([dynamic wallet]) async {
-  //   try {
-  //     final result = await showDialog(
-  //       context: context,
-  //       barrierDismissible: false,
-  //       builder: (ctx) => AlertDialogWidget(oldCost: wallet),
-  //     );
-
-  //     // if (result == true) {
-  //     //   _calculateCosts();
-  //     //   setState(() {});
-  //     // }
-  //   } catch (e, s) {
-  //     debugPrint('$e');
-  //     debugPrint('$s');
-  //   }
-  // }
 }
